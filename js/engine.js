@@ -41,10 +41,10 @@ function mapScreenDraw(){
                             console.error("플레이어 스폰지점은 하나여야만 합니다. 좌상단에 지정된 스폰지점으로 등록하겠습니다.");
                             break;
                         }
-                        SplayerX = nowX + (boxOneW/2); 
                         NplayerX = tw;
-                        SplayerY = nowY + (boxOneH/2); 
                         NplayerY = th;
+                        SplayerX = ((NplayerX*boxOneW)+parseInt(boxOneW/2));
+                        SplayerY = ((NplayerY*boxOneH)+parseInt(boxOneH/2));
                         lastPlayerX = SplayerX; lastPlayerY = SplayerY;
                     break;
                     case 5:
@@ -116,9 +116,11 @@ function playerDraw(pX, pY){ // 그리기 및 충돌 처리
     
     // collision check
     NplayerX = parseInt(SplayerX/boxOneW); NplayerY = parseInt(SplayerY/boxOneH);
-    cpX = Math.abs(( boxOneW - (SplayerX % boxOneW) ) / boxOneW); cpY = Math.abs(( boxOneH - (SplayerY % boxOneH) ) / boxOneH); // 구역 침범 비율
+    cpX = Math.abs(( (boxOneW/2) - (SplayerX % boxOneW) )) / (boxOneW/2); cpY = Math.abs(( (boxOneH / 2) - (SplayerY % boxOneH) )) / (boxOneH/2); // 구역 침범 비율
     // 코인 처리부분
-    if (map[NplayerY][NplayerX] == 10 && cpX >= 0.35 && cpY >= 0.35 ) {
+    //console.log(cpX+" "+cpY);
+    if (map[NplayerY][NplayerX] == 10 && cpX <= 0.3 && cpY <= 0.3 ) {
+        console.log(cpX+" "+cpY)
         score += 1; map[NplayerY][NplayerX] = 0;
         scx.fillStyle = "black";
         scx.arc(NplayerX*boxOneW + (boxOneW/2), NplayerY*boxOneH + (boxOneH/2), 4, 0, Math.PI*2, 0);
@@ -136,18 +138,19 @@ function playerDraw(pX, pY){ // 그리기 및 충돌 처리
 function playerMove(){
     xx = 0; yy = 0;
     switch (moving){
-        case 0: return; break; //Stop
+        case 0: break; //Stop
         case 1: xx = -1; break; // Left
         case 2: xx = 1; break; // Right
         case 3: yy = -1; break; // Up
         case 4: yy = 1; // Down
     }
-    if (SplayerX == ((NplayerX*boxOneW)+parseInt(boxOneW/2)) || SplayerY == ((NplayerY*boxOneH)+parseInt(boxOneH/2))){
+    if (SplayerX == ((NplayerX*boxOneW)+parseInt(boxOneW/2)) && SplayerY == ((NplayerY*boxOneH)+parseInt(boxOneH/2))){
         if (nxmoving != moving){
             if (nxmoving == 1 && map[NplayerY][NplayerX-1] != 2){moving = 1;}
-            if (nxmoving == 2 && map[NplayerY][NplayerX+1] != 2){moving = 1;}
-            if (nxmoving == 3 && map[NplayerY-1][NplayerX] != 2){moving = 1;}
-            if (nxmoving == 4 && map[NplayerY+1][NplayerX] != 2){moving = 1;}
+            if (nxmoving == 2 && map[NplayerY][NplayerX+1] != 2){moving = 2;}
+            if (nxmoving == 3 && map[NplayerY-1][NplayerX] != 2){moving = 3;}
+            if (nxmoving == 4 && map[NplayerY+1][NplayerX] != 2){moving = 4;}
+            return;
         }
         if (map[NplayerY+yy][NplayerX+xx] == 2){
             moving = 0; nxmoving = 0;
@@ -158,12 +161,15 @@ function playerMove(){
     SplayerY += yy;
 }
 
-function keyCheck(pkey){
-    if (pkey.key == "ArrowLeft"){nxmoving = 1;}
-    else if (pkey.key == "ArrowRight"){nxmoving = 2;}
-    else if (pkey.key == "ArrowUp"){nxmoving = 3;}
-    else if (pkey.key == "ArrowDown"){nxmoving = 4;}
+function keyCheck(pkey, ckey){
+    if (pkey.key == "ArrowLeft" || ckey == 1){nxmoving = 1;}
+    else if (pkey.key == "ArrowRight" || ckey == 2){nxmoving = 2;}
+    else if (pkey.key == "ArrowUp" || ckey == 3){nxmoving = 3;}
+    else if (pkey.key == "ArrowDown" || ckey == 4){nxmoving = 4;}
+    console.log(nxmoving);
 }
+
+function EnemySys
 
 mapScreenDraw();
 playerDraw(SplayerX, SplayerY);

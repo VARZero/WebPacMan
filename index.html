@@ -8,12 +8,13 @@
 </head>
 <body>
     <canvas id="scr" width="800" height="500">이 브라우저는 캔버스 태그를 지원하지 않습니다.</canvas>
+    <br>
     <button id="start">start</button>
-    <button id="up">up</button>
+    <button id="up" onclick="keyCheck('',3);">up</button>
     <button id="reset">reset</button><br>
-    <button id="left">left</button>
-    <button id="down">down</button>
-    <button id="right">right</button>
+    <button id="left" onclick="keyCheck('',1);">left</button>
+    <button id="down" onclick="keyCheck('',4);">down</button>
+    <button id="right" onclick="keyCheck('',2);">right</button>
     <script src="js/game_setting.js"></script>
     <script src="js/engine.js"></script>
 </body>
