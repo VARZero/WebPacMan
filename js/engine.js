@@ -169,7 +169,7 @@ function keyCheck(pkey, ckey){
     console.log(nxmoving);
 }
 
-function EnemySys
+//function EnemySys
 
 mapScreenDraw();
 playerDraw(SplayerX, SplayerY);
