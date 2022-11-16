@@ -169,7 +169,13 @@ function keyCheck(pkey, ckey){
     console.log(nxmoving);
 }
 
-//function EnemySys
+class EnemySys{
+    constructor(color, pX, pY){
+        this.color = color;
+        this.pX = pX;
+        this.pY = pY;
+    }
+}
 
 mapScreenDraw();
 playerDraw(SplayerX, SplayerY);
@@ -177,3 +183,4 @@ setInterval(() => {
     playerDraw(SplayerX, SplayerY);
     playerMove();
 }, 15);
+document.addEventListener("keydown", (keyEv) => {keyCheck(keyEv,0);})
