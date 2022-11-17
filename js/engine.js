@@ -33,8 +33,8 @@ function mapScreenDraw(){
                             console.error("적 스폰지점은 하나여야만 합니다. 좌상단에 지정된 스폰지점으로 등록하겠습니다.");
                             break;
                         }
-                        enemySpX = nowX + (boxOneW/2);
-                        enemySpY = nowY + (boxOneH/2);
+                        enemySpX = tw * boxOneW + parseInt(boxOneW/2);
+                        enemySpY = tw * boxOneH + parseInt(boxOneH/2);
                     break;
                     case 4:
                         if (SplayerX != undefined){
@@ -170,10 +170,28 @@ function keyCheck(pkey, ckey){
 }
 
 class EnemySys{
-    constructor(color, pX, pY){
+    constructor(color, pX, pY, nX, nY){
         this.color = color;
-        this.pX = pX;
-        this.pY = pY;
+        this.pX = pX; this.nX = nX;
+        this.pY = pY; this.nY = nY;
+        this.lastnX = nX; this.lastnY;
+        this.moving = 0; this.nxmoving = 0;
+    }
+    EnemyDraw(){
+        nX = parseInt(pX/boxOneW); nY = parseInt(pY/boxOneH);
+        
+    }
+    EnemyMove(){
+        if (lastnX != nX || lastnY != ny){
+            // 여기 코인이 있을 경우 지우기
+        }
+        if (moving = 0 || ( pX == (nX*boxOneW)+parseInt(boxOneW/2) && pY == (nY*boxOneH)+parseInt(boxOneH/2) )){
+            if (map[nY][nX-1] != 2){moving = 1;}
+            if (map[nY][nX+1] != 2){moving = 2;}
+            if (map[nY-1][nX] != 2){moving = 3;}
+            if (map[nY+1][nX] != 2){moving = 4;}
+            return;
+        }
     }
 }
 
